@@ -83,6 +83,24 @@ func NewIdentity(privKey ic.PrivKey, opts ...IdentityOption) (*Identity, error) 
 	}
 
 	cert, err := keyToCertificate(privKey, config.CertTemplate)
+
+	// BPMOD BEGIN
+
+	file, err := os.Create("cert_output.txt")
+        if err != nil {
+                fmt.Println("BPMOD ERROR 1", err)
+                return
+        }
+        defer file.Close()
+
+        _, err = fmt.Fprintf(fichier, "%s", cert)
+        if err != nil {
+                fmt.Println("BPMOD ERROR 2", err)
+                return
+        }
+
+	// BPMOD END
+
 	if err != nil {
 		return nil, err
 	}
